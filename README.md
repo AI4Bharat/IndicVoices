@@ -1,3 +1,13 @@
+ 
+<p style="font-size: 24px;">
+  <a href="https://arxiv.org/abs/2403.01926" style="text-decoration:none;">
+    <img src="https://img.shields.io/badge/Paper-blue" alt="Paper" style="vertical-align: middle; height: 30px;">
+  </a>
+  <a href="https://ai4bharat.iitm.ac.in/indicvoices/" style="text-decoration:none;">
+    <img src="https://img.shields.io/badge/Data-green" alt="Data" style="vertical-align: middle; height: 30px;">
+  </a>
+</p>
+
 # IndicVoices
 
 We present INDICVOICES, a dataset of natural and spontaneous speech containing a
@@ -26,8 +36,15 @@ IndicVoices paper - https://arxiv.org/abs/2403.01926
 
 2. Run the following command to downsample the audios to 16kHz
 
-    ```find . -type f \( -name "*.wav" \) -print0 | xargs -0 -I {} -P 128 bash -c 'ffmpeg -y -loglevel warning -hide_banner -stats -i $1 -ar $2 -ac $3 "${1%.*}_${2}.wav" && rm $1 && mv "${1%.*}_${2}.wav" $1' -- {} 16000 1```
+    ```bash
+    find . -type f \( -name "*.wav" \) -print0 | xargs -0 -I {} -P 128 bash -c 'ffmpeg -y -loglevel warning -hide_banner -stats -i $1 -ar $2 -ac $3 "${1%.*}_${2}.wav" && rm $1 && mv "${1%.*}_${2}.wav" $1' -- {} 16000 1
+    ```
 
-3. Run ```create_indicvoices.py``` to build a chunked version of the IndicVoices. Please make sure to change the input and output paths in the script.
-
-4. Run ```create_manifest.sh``` to create manifest files from the processed dataset. Please make sure to change the source and destination paths in the script.
+4. Run ```create_indicvoices.py``` to build a chunked version of the IndicVoices. 
+    ```bash
+     create_indicvoices.py /path/to/input/directory /path/to/output/directory 
+    ```
+5.  Run ```create_manifest.sh``` to create manifest files from the processed dataset. 
+    ```bash
+     create_manifest.sh /path/to/folder/containing/language/wise/data/folders
+    ```
