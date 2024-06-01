@@ -33,12 +33,13 @@ IndicVoices paper - https://arxiv.org/abs/2403.01926
 ### Processing 
 1. After [downloading](https://ai4bharat.iitm.ac.in/indicvoices) the data, extract the tar files so that TGZ folder and language specific folders are on similar level
     ```
-    TGZ
-    Assamese (extracted)
-    Nepali (extracted)
-    ...
-    ...
-    Kashmiri (extracted)
+    ROOT
+     - TGZ
+     - Assamese
+     - Nepali
+     - ...
+     - ...
+     - Kashmiri
     ```
 
 3. Run the following command to downsample the audios to 16kHz
