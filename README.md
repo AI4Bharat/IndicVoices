@@ -50,9 +50,9 @@ IndicVoices paper - https://arxiv.org/abs/2403.01926
 
 4. Run ```create_indicvoices.py``` to build a chunked version of the IndicVoices. 
     ```bash
-     create_indicvoices.py /path/to/input/directory /path/to/output/directory 
+     python create_indicvoices.py /path/to/input/directory /path/to/output/directory 
     ```
 5.  Run ```create_manifest.sh``` to create manifest files from the processed dataset. 
     ```bash
-     create_manifest.sh /path/to/folder/containing/language/wise/data/folders
+     bash create_manifest.sh /path/to/folder/containing/language/wise/data/folders
     ```
