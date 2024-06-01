@@ -24,8 +24,7 @@ transcription guidelines and transcription tools. We hope that this open source
 blueprint will serve as a comprehensive starter kit for data collection efforts in
 other multilingual regions of the world. Using INDICVOICES, we build IndicASR,
 the first ASR model to support all the 22 languages listed in the 8th schedule of the
-Constitution of India. All the data, tools, guidelines, models and other materials
-developed as a part of this work will be made publicly available.
+Constitution of India.
 
 Explore and Download IndicVoices https://ai4bharat.iitm.ac.in/indicvoices 
 
