@@ -30,7 +30,26 @@ Explore and Download IndicVoices https://ai4bharat.iitm.ac.in/indicvoices
 
 IndicVoices paper - https://arxiv.org/abs/2403.01926
 
-### Processing 
+### Collection Platform
+Kathbath is an open-source, crowdsourcing framework designed to facilitate the large-scale collection of audio data. It includes an Android frontend that allows users to easily complete microtasks on their phones. Kathbath is built on top of Karya, Microsoft's open-source crowdsourcing platform toolkit.
+```
+https://github.com/AI4Bharat/Karya
+```
+
+
+### Transcription Platform
+Shoonya is an open source platform to annotate and label data at scale, built with a vision to enhance digital presence of under-represented languages in India. Shoonya offers support for multiple data types (Ex : parallel datasets, OCR, ASR, TTS etc) and labeling tasks (Ex : parallel datasets, OCR, ASR, TTS etc).
+```
+https://github.com/AI4Bharat/Shoonya
+```
+
+
+## IndicASR
+
+### Checkpoint:
+This checkpoint is trained using IndicVoices and in a multilingual setting. Use the following repo to train and run inference
+
+### Data Preparation 
 1. After [downloading](https://ai4bharat.iitm.ac.in/indicvoices) the data, extract the tar files so that TGZ folder and language specific folders are on similar level
     ```
     ROOT_FOLDER
@@ -56,3 +75,9 @@ IndicVoices paper - https://arxiv.org/abs/2403.01926
     ```bash
      bash create_manifest.sh /path/to/folder/containing/language/wise/data/folders
     ```
+
+### Model Training
+1. Install NeMo
+
+
+
