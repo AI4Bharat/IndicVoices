@@ -47,7 +47,7 @@ https://github.com/AI4Bharat/Shoonya
 ## IndicASR
 
 ### Checkpoint:
-This checkpoint is trained using IndicVoices and in a multilingual setting. Use the following repo to train and run inference
+This checkpoint is trained using IndicVoices and in a multilingual setting. Use the [NeMo](https://github.com/AI4Bharat/NeMo) to train and run inference
 
 ### Data Preparation 
 1. After [downloading](https://ai4bharat.iitm.ac.in/indicvoices) the data, extract the tar files so that TGZ folder and language specific folders are on similar level
@@ -77,7 +77,20 @@ This checkpoint is trained using IndicVoices and in a multilingual setting. Use 
     ```
 
 ### Model Training
-1. Install NeMo
+1. Install [Nemo](https://github.com/AI4Bharat/NeMo)
+
+2. Training command
+   ```
+   python ${RUNNER_PATH}/speech_to_text_hybrid_rnnt_ctc_bpe.py \
+    --config-path=${CONFIG_PATH} \
+    --config-name=${CONFIG_NAME} \
+    trainer.devices=-1 \
+    trainer.accelerator="gpu" \
+    trainer.strategy="ddp_find_unused_parameters_true" \
+    exp_manager.name=<exp_name> \
+    exp_manager.wandb_logger_kwargs.name=<exp_name> \
+    exp_manager.explicit_log_dir=$LOG_DIR 
+   ```
 
 
 
