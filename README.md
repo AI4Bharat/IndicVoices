@@ -92,5 +92,19 @@ This checkpoint is trained using IndicVoices and in a multilingual setting. Use 
     exp_manager.explicit_log_dir=$LOG_DIR 
    ```
 
+3. Inference
+   ```
+   OMP_NUM_THREADS=64 python ${RUNNER_PATH}/transcribe_speech.py \
+        model_path=$MODEL_PATH \
+        dataset_manifest=$MANIFEST_PATH.json \
+        output_filename=$SAVE_FILE_NAME \
+        langid=$LANGID \
+        batch_size=64 \
+        compute_timestamps=False \
+        compute_langs=False \
+        cuda=$GPU_ID \
+        amp=True \
+        append_pred=False 
+   ```
 
 
