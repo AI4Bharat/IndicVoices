@@ -11,9 +11,9 @@
 # IndicVoices
 
 We present INDICVOICES, a dataset of natural and spontaneous speech containing a
-total of 7348 hours of read (9%), extempore (74%) and conversational (17%) audio
-from 16237 speakers covering 145 Indian districts and 22 languages. Of these
-7348 hours, 1639 hours have already been transcribed, with a median of 73 hours
+total of 12000 hours of read (8%), extempore (76%) and conversational (15%) audio 
+from 22563 speakers covering 208 Indian districts and 22 languages. Of these 12000 hours, 
+3200 hours have already been transcribed, with a median of 122 hours
 per language. Through this paper, we share our journey of capturing the cultural,
 linguistic and demographic diversity of India to create a one-of-its-kind inclusive
 and representative dataset. More specifically, we share an open-source blueprint
