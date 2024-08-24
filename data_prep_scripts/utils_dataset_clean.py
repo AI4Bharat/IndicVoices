@@ -202,6 +202,7 @@ if __name__ == '__main__':
         lines = reader.read().strip().splitlines()
     
     refined_manifest = []
+    err = []
     total = 0
     useful = 0
     for line in tqdm.tqdm(lines):
@@ -209,15 +210,20 @@ if __name__ == '__main__':
         text = j_obj['text']
         lang_id = j_obj['lang']
         total += j_obj['duration']
-        valid, text, _ = clean_sentence(text,DICTS[lang_id],custom_word_transform=custom_word_transforms.get(lang_id,{}),custom_punct_transform=custom_punct_transforms.get(lang_id,{}), extras=True)
+        valid, ntext, _ = clean_sentence(text,DICTS[lang_id],custom_word_transform=custom_word_transforms.get(lang_id,{}),custom_punct_transform=custom_punct_transforms.get(lang_id,{}), extras=True)
 
         if valid:
-            j_obj['text'] = text
+            j_obj['text'] = ntext
             refined_manifest.append(json.dumps(j_obj))
             useful += j_obj['duration']
-    
+        else:
+            err.append(f'{_[0]}|||{text}|||{_[1]}|||{ntext}|||f{j_obj["audio_filepath"]}')
+
     with open(manifest_path.replace('.json','_filtered.json'),'w') as writer:
         print('\n'.join(refined_manifest),file=writer)
+
+    with open(manifest_path.replace('.json','.err'),'w') as writer:
+        print('\n'.join(err),file=writer)
     
     print(
         f"{manifest_path.replace('.json','_filtered.json')} retained {round(useful/3600)} out of {round(total/3600)} hours"
