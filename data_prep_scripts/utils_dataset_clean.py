@@ -5,7 +5,7 @@ import json
 import tqdm
 from utils_dataset_custom_transforms import custom_word_transforms, custom_punct_transforms
 
-DICT_PATH='/home/asr/speech-datasets/indicvoices/artifacts/dictionaries'
+DICT_PATH='../artifacts/dictionaries'
 
 lang_codes = {
     'assamese' :'as',
