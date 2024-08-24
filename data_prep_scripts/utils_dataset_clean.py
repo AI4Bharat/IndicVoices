@@ -3,6 +3,7 @@ import pandas as pd
 import sys
 import json
 import tqdm
+from unicodedata import normalize
 from utils_dataset_custom_transforms import custom_word_transforms, custom_punct_transforms
 
 DICT_PATH='../artifacts/dictionaries'
@@ -150,7 +151,7 @@ def apply_transform(text, transform:dict):
 
 
 def validate_sentence(text, dictionary, custom_punct_transform={}):
-    noise_removed_sent = apply_transform(text, noise_tags_removal)
+    noise_removed_sent = apply_transform(normalized_text, noise_tags_removal)
     end_char_sent = apply_transform(noise_removed_sent, end_char_transform)
     punct_removed = apply_transform(end_char_sent, puct_transform)
     punct_removed = apply_transform(punct_removed, custom_punct_transform)
@@ -160,8 +161,11 @@ def validate_sentence(text, dictionary, custom_punct_transform={}):
     return punct_removed, noise_removed_sent, valid, extras
 
 def clean_sentence(source_sent, dictionary, custom_word_transform={}, custom_punct_transform={}, extras=False):
+    # unicode normalization
+    normalized_text = normalize('NFKC', source_sent)
+    
     # Take care of parenthesis by removing extra spaces 
-    sent = apply_transform(source_sent,parenthesis_transform)
+    sent = apply_transform(normalized_text,parenthesis_transform)
 
     # change the joiners
     sent = apply_transform(sent,joiner_transform)
