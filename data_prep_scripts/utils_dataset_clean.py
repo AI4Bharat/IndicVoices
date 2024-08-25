@@ -151,7 +151,7 @@ def apply_transform(text, transform:dict):
 
 
 def validate_sentence(text, dictionary, custom_punct_transform={}):
-    noise_removed_sent = apply_transform(normalized_text, noise_tags_removal)
+    noise_removed_sent = apply_transform(text, noise_tags_removal)
     end_char_sent = apply_transform(noise_removed_sent, end_char_transform)
     punct_removed = apply_transform(end_char_sent, puct_transform)
     punct_removed = apply_transform(punct_removed, custom_punct_transform)
