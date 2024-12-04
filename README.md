@@ -26,7 +26,7 @@ other multilingual regions of the world. Using INDICVOICES, we build IndicASR,
 the first ASR model to support all the 22 languages listed in the 8th schedule of the
 Constitution of India.
 
-Explore and Download IndicVoices https://ai4bharat.iitm.ac.in/indicvoices 
+Explore and Download IndicVoices https://ai4bharat.iitm.ac.in/datasets/indicvoices 
 
 IndicVoices paper - https://arxiv.org/abs/2403.01926
 
@@ -50,7 +50,7 @@ https://github.com/AI4Bharat/Shoonya
 [IndicASR](https://indic-asr-public.objectstore.e2enetworks.net/indicvoices_artifacts/indicvoices-no-ssl-acl.nemo): A multilingual model trained on IndicVoices.
 
 ### Data Preparation 
-1. After [downloading](https://ai4bharat.iitm.ac.in/indicvoices) the data, extract the tar files so that TGZ folder and language specific folders are on similar level
+1. After [downloading](https://ai4bharat.iitm.ac.in/datasets/indicvoices) the data, extract the tar files so that TGZ folder and language specific folders are on similar level
     ```
     ROOT_FOLDER
      |- TGZ
