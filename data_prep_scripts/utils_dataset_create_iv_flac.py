@@ -74,6 +74,7 @@ def parse_json(json_path):
                     f'VerbatimSource: {verbatim["text"]}', 
                     f'NormalizedRefined: {ntext}',
                     f'NormalizedSource: {normalized["text"]}', 
+                    f'Duration: {len(wav_patch)/sr}'
                 )
             )
             continue
@@ -114,9 +115,9 @@ def parse_json(json_path):
             writer.write('\n')
 
     # print(errors)
-    for fp, a, b, c, d, e in errors:
+    for fp, a, b, c, d, e, f in errors:
         with open(fp,'w') as writer:
-            print(a,b,c,d,e,sep='\n',file=writer)
+            print(a,b,c,d,e,f,sep='\n',file=writer)
             print(file=writer)
             print(file=writer)
 
