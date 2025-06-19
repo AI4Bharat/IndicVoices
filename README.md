@@ -33,7 +33,8 @@ IndicVoices paper - https://arxiv.org/abs/2403.01926
 ### Collection Platform
 Kathbath is an open-source, crowdsourcing framework designed to facilitate the large-scale collection of audio data. It includes an Android frontend that allows users to easily complete microtasks on their phones. Kathbath is built on top of Karya, Microsoft's open-source crowdsourcing platform toolkit.
 ```
-https://github.com/AI4Bharat/Karya
+[Backend](https://github.com/AI4Bharat/KathbathXBackend)
+[Frontend](https://github.com/AI4Bharat/KathbathXFrontend)
 ```
 
 
