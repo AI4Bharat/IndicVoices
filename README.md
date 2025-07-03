@@ -48,7 +48,7 @@ https://github.com/AI4Bharat/Shoonya
 ## IndicASR
 
 ### Checkpoint:
-[IndicASR](https://indic-asr-public.objectstore.e2enetworks.net/indicvoices_artifacts/indicvoices-no-ssl-acl.nemo): A multilingual model trained on IndicVoices.
+[IndicASR](https://indicconformer.objectstore.e2enetworks.net/models/indicvoices-no-ssl-acl.nemo): A multilingual model trained on IndicVoices.
 
 ### Data Preparation 
 1. After [downloading](https://ai4bharat.iitm.ac.in/datasets/indicvoices) the data, extract the tar files so that TGZ folder and language specific folders are on similar level
