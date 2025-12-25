@@ -24,8 +24,13 @@ def parse_json(json_path):
     language=json_path.split('/')[-4]
     wav_path = json_path.replace('.json','.flac')
     # /home/asr/datasets/indicvoices_raw/Urdu/v1/train/0a1b8a86-11ca-432d-96e3-8fc1e1873bdc_0.flac
-    with open(json_path) as reader:
-        json_obj = json.load(reader)
+    try:
+        with open(json_path) as reader:
+            json_obj = json.load(reader)
+
+    except:
+        print(f'Error in loading json: {json_path}')
+        return
 
     output_root, name = os.path.split(wav_path.replace(INPUT_DIR,OUTPUT_DIR))
     if name in SANSKRIT_FIX:
@@ -53,6 +58,8 @@ def parse_json(json_path):
     assert sr == 16000, 'Looks like audios are not sampled at 16Khz'
     file_jsons = []
     errors = []
+
+    # try:
     for e,(verbatim, normalized) in enumerate(zip(json_obj['verbatim'],json_obj['normalized'])):
         lang_id = lang_codes[language.lower()]
         start, end = int(max(verbatim['start'],0) * sr), int(verbatim['end']*sr)
@@ -107,7 +114,13 @@ def parse_json(json_path):
             'verification_report' : json_obj['verification_report'],
             'unsanitized_verbatim': verbatim['text'],
             'unsanitized_normalized': normalized['text'],
+            'start_samples': start,
+            'end_samples': end,
+            'full_audio_filepath': wav_path
         }))
+    # except:
+    #     print(json_path)
+    #     # sys.exit()
         
     if len(file_jsons) > 0:
         with open(f"{transcript_path}/{name.replace('.flac','.json')}",'w') as writer:
@@ -115,7 +128,7 @@ def parse_json(json_path):
             writer.write('\n')
 
     # print(errors)
-    for fp, a, b, c, d, e, f in errors:
+    for fp, a, b, c, d, e,f in errors:
         with open(fp,'w') as writer:
             print(a,b,c,d,e,f,sep='\n',file=writer)
             print(file=writer)
@@ -132,6 +145,6 @@ if __name__ == '__main__':
         # OUTPUT_DIR='/home/asr/speech-datasets/indicvoices/eval-data'
         jsons = glob.glob(f"{INPUT_DIR}/**/test/**/*.json",recursive=True)
         # jsons = glob.glob(f"{INPUT_DIR}/Bengali/v1/test/**/*.json",recursive=True)
-    Parallel(n_jobs=-64,backend='multiprocessing')(
+    Parallel(n_jobs=-8,backend='multiprocessing')(
         delayed(parse_json)(j) for j in tqdm.tqdm(jsons)
     )
