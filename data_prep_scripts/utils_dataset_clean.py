@@ -6,7 +6,8 @@ import tqdm
 from unicodedata import normalize
 from utils_dataset_custom_transforms import custom_word_transforms, custom_punct_transforms
 
-DICT_PATH='../artifacts/dictionaries'
+# DICT_PATH='/projects/data/asrteam/speechteam/speech-datasets/artifacts/dictionaries'
+DICT_PATH='/auto/ASR/shared_ai4b/asrteam/speechteam/speech-datasets/artifacts/dictionaries'
 
 lang_codes = {
     'assamese' :'as',
@@ -61,6 +62,8 @@ noise_tags_transform = {
 }
 
 noise_tags_removal = dict(zip(noise_tags,['']* len(noise_tags)))
+# retain unintelligible tag
+noise_tags_removal['<unintelligible>'] = '<unintelligible>'
 
 parenthesis_transform = {
         ')':']',
@@ -102,7 +105,8 @@ puct_transform = {
     '‑':' ',
     ' ] ': ' ',
     ' [ ': ' ',
-    '꫰': ' ' # comma in manipuri
+    '꫰': ' ', # comma in manipuri
+    '##': ' ' # for youtube
 }
 
 end_char_transform = {
@@ -156,14 +160,14 @@ def validate_sentence(text, dictionary, custom_punct_transform={}):
     punct_removed = apply_transform(end_char_sent, puct_transform)
     punct_removed = apply_transform(punct_removed, custom_punct_transform)
 
-    extras = set(punct_removed) - dictionary
+    extras = set(punct_removed.replace('<unintelligible>',' ')) - dictionary
     valid = len(extras) == 0
     return punct_removed, noise_removed_sent, valid, extras
 
 def clean_sentence(source_sent, dictionary, custom_word_transform={}, custom_punct_transform={}, extras=False):
     # unicode normalization
     normalized_text = normalize('NFKC', source_sent)
-    
+
     # Take care of parenthesis by removing extra spaces 
     sent = apply_transform(normalized_text,parenthesis_transform)
 
@@ -210,25 +214,31 @@ if __name__ == '__main__':
     total = 0
     useful = 0
     for line in tqdm.tqdm(lines):
-        j_obj = json.loads(line)
+        try:
+            j_obj = json.loads(line)
+        except:
+            print('Line error', manifest_path)
+            continue
         text = j_obj['text']
-        lang_id = j_obj['lang']
+        lang_id = j_obj.get('lang') or j_obj.get('detected_language')
         total += j_obj['duration']
         valid, ntext, _ = clean_sentence(text,DICTS[lang_id],custom_word_transform=custom_word_transforms.get(lang_id,{}),custom_punct_transform=custom_punct_transforms.get(lang_id,{}), extras=True)
 
-        if valid:
+        if (valid) and (len(ntext) > 0) and ('<unintelligible>' not in ntext) and (j_obj['duration'] > 0):
             j_obj['text'] = ntext
             refined_manifest.append(json.dumps(j_obj))
             useful += j_obj['duration']
         else:
-            err.append(f'{_[0]}|||{text}|||{_[1]}|||{ntext}|||f{j_obj["audio_filepath"]}')
+            err.append(f'{_[0]}|||{text}|||{_[1]}|||{ntext}|||f{j_obj.get("audio_filepath") or j_obj.get("chunk_path")}')
 
-    with open(manifest_path.replace('.json','_filtered.json'),'w') as writer:
-        print('\n'.join(refined_manifest),file=writer)
+    if len(refined_manifest) > 0:
+        with open(manifest_path.replace('.json','_filtered.json'),'w') as writer:
+            print('\n'.join(refined_manifest),file=writer)
 
-    with open(manifest_path.replace('.json','.err'),'w') as writer:
-        print('\n'.join(err),file=writer)
-    
+    if len(err) > 0:
+        with open(manifest_path.replace('.json','.err'),'w') as writer:
+            print('\n'.join(err),file=writer)
+        
     print(
         f"{manifest_path.replace('.json','_filtered.json')} retained {round(useful/3600)} out of {round(total/3600)} hours"
         )
